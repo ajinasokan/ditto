@@ -1,0 +1,40 @@
+name: ditto
+description: A new Flutter project.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  feather_icons_flutter: 4.7.4
+  shared_preferences: 0.5.7+2
+  draggable_scrollbar: 0.0.4
+  flutter_tts: 1.2.0
+  url_launcher: 5.4.7
+  path_provider: 1.6.8
+  store_keeper: 0.0.4
+  flutter_displaymode: 0.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  csv: 4.0.3
+  http: 0.12.2
+  archive: 2.0.13
+  yaml: 2.2.1
+  rename: 1.2.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/
+
+  fonts:
+    - family: NotoSans
+      fonts:
+        - asset: fonts/noto.ttf

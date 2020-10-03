@@ -1,0 +1,30 @@
+{
+    "dir": "lib",
+    "generators": [
+        {
+            "dir": "lib/models",
+            "type": "model",
+            "recursive": false
+        },
+        {
+            "dir": "lib/models",
+            "type": "index",
+            "recursive": false
+        },
+        {
+            "dir": "lib/components",
+            "type": "index",
+            "recursive": false
+        },
+        {
+            "dir": "lib/mutations",
+            "type": "index",
+            "recursive": false
+        },
+        {
+            "dir": "lib/screens",
+            "type": "index",
+            "recursive": false
+        }
+    ]
+}
