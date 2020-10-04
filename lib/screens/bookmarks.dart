@@ -1,7 +1,6 @@
+import 'package:ditto/app.dart';
 import 'package:flutter/material.dart';
 import 'package:store_keeper/store_keeper.dart';
-
-import 'package:ditto/app.dart';
 
 class Bookmarks extends StatefulWidget {
   const Bookmarks();
@@ -33,14 +32,14 @@ class BookmarksState extends State<Bookmarks> {
               margin: EdgeInsets.only(bottom: 8.0, left: 24.0),
               child: Text(
                 "My bookmarks",
-                style: Theme.of(context).textTheme.subtitle,
+                style: Theme.of(context).textTheme.subtitle2,
               ),
             ),
             Container(
               margin: EdgeInsets.only(bottom: 8.0, right: 24.0),
               child: Text(
                 count + " items",
-                style: Theme.of(context).textTheme.subtitle,
+                style: Theme.of(context).textTheme.subtitle2,
               ),
             ),
           ],

@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:draggable_scrollbar/draggable_scrollbar.dart';
-import 'package:store_keeper/store_keeper.dart';
-
 import 'package:ditto/app.dart';
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
+import 'package:flutter/material.dart';
+import 'package:store_keeper/store_keeper.dart';
 
 class Index extends StatefulWidget {
   const Index();
@@ -36,14 +35,14 @@ class IndexState extends State<Index> {
               margin: EdgeInsets.only(bottom: 8.0, left: 24.0),
               child: Text(
                 "Index of words",
-                style: Theme.of(context).textTheme.subtitle,
+                style: Theme.of(context).textTheme.subtitle2,
               ),
             ),
             Container(
               margin: EdgeInsets.only(bottom: 8.0, right: 24.0),
               child: Text(
                 "${datukWords.length + olamWords.length} items",
-                style: Theme.of(context).textTheme.subtitle,
+                style: Theme.of(context).textTheme.subtitle2,
               ),
             ),
           ],

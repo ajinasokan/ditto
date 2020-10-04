@@ -1,21 +1,22 @@
-import 'package:flutter/material.dart';
 import 'package:ditto/models/index.dart';
+import 'package:flutter/material.dart';
 import 'package:store_keeper/store_keeper.dart';
 
-export 'dart:io';
 export 'dart:async';
 export 'dart:convert';
-export 'package:flutter/material.dart';
-export 'package:flutter/cupertino.dart' show CupertinoPageRoute;
-export 'package:store_keeper/store_keeper.dart';
-export 'package:path_provider/path_provider.dart';
-export 'package:flutter_tts/flutter_tts.dart';
-export 'package:feather_icons_flutter/feather_icons_flutter.dart';
+export 'dart:io';
 
 export 'package:ditto/components/index.dart';
 export 'package:ditto/models/index.dart';
 export 'package:ditto/mutations/index.dart';
 export 'package:ditto/screens/index.dart';
+export 'package:feather_icons_flutter/feather_icons_flutter.dart';
+export 'package:flutter/cupertino.dart' show CupertinoPageRoute;
+export 'package:flutter/material.dart';
+export 'package:flutter_tts/flutter_tts.dart';
+export 'package:path_provider/path_provider.dart';
+export 'package:store_keeper/store_keeper.dart';
+
 export 'utils.dart';
 
 var extraFontSize = 0.0;
@@ -23,30 +24,30 @@ var fontFamily = "NotoSans";
 
 TextTheme textTheme(bool dark) => TextTheme(
       // app title
-      title: TextStyle(
+      headline6: TextStyle(
         fontSize: 32.0 + extraFontSize,
         fontWeight: FontWeight.w600,
         fontFamily: fontFamily,
       ),
-      subtitle: TextStyle(
+      subtitle2: TextStyle(
         color: Colors.grey.shade500,
         fontSize: 14.0 + extraFontSize,
         fontWeight: FontWeight.w600,
         fontFamily: fontFamily,
       ),
       // list title sub text, bottom navigation text
-      body1: TextStyle(
+      bodyText2: TextStyle(
         fontSize: 14.0 + extraFontSize,
         fontFamily: fontFamily,
       ),
-      body2: TextStyle(
+      bodyText1: TextStyle(
         fontSize: 14.0 + extraFontSize,
         letterSpacing: 1.03,
         height: 1.2,
         fontFamily: fontFamily,
       ),
       // list tile main text, text fields text, text field hint
-      subhead: TextStyle(
+      subtitle1: TextStyle(
         fontSize: 16.0 + extraFontSize,
         fontFamily: fontFamily,
       ),

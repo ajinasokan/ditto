@@ -146,14 +146,14 @@ class SearchState extends State<Search>
                 margin: EdgeInsets.only(bottom: 8.0, left: 24.0),
                 child: Text(
                   title,
-                  style: Theme.of(context).textTheme.subtitle,
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
               ),
               Container(
                 margin: EdgeInsets.only(bottom: 8.0, right: 24.0),
                 child: Text(
                   count,
-                  style: Theme.of(context).textTheme.subtitle,
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
               ),
             ],

@@ -20,7 +20,7 @@ class _MainState extends State<Main> {
             child: Text(
               'ഓളം',
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.title,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
           ),
         ),

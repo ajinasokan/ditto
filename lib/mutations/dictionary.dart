@@ -1,6 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:ditto/app.dart';
 import 'package:flutter/services.dart' show MethodChannel, rootBundle;
-import 'dart:typed_data';
 
 const OLAM = 0;
 const DATUK = 1;
@@ -61,7 +62,6 @@ class FetchMeaning extends Mutation<OlamStore> {
     );
 
     int offset = 0;
-    var totalLen = bytesToInt(bytes.sublist(offset, offset + 4));
     offset += 4;
     var wordLen = bytesToInt(bytes.sublist(offset, offset + 4));
     offset += 4;
