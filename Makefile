@@ -12,7 +12,7 @@ alar:
 	cd scripts; dart bootstrap.dart alar_icon
 
 download:
-	cd scripts; downloader.dart
+	cd scripts; dart downloader.dart
 
 db:
 	cd scripts; dart builder.dart
