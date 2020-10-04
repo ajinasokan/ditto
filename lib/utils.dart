@@ -17,6 +17,7 @@ List<Map<String, String>> md2map(String md) {
     items
         .add({"type": "link", "value": match.group(1), "link": match.group(2)});
     pos = match.end;
+    return md;
   });
   if (pos < md.length)
     items.add({"type": "text", "value": md.substring(pos, md.length)});

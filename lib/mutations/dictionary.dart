@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:ditto/app.dart';
-import 'package:flutter/services.dart' show MethodChannel, rootBundle;
+import 'package:flutter/services.dart' show rootBundle;
 
 const OLAM = 0;
 const DATUK = 1;
