@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'models.dart';
 import 'utils.dart';
 
-void serialize(List<Entry> words, String defFile, String indexFile) {
+void serialize(List<Entry> words, String defFile, String indexFile) async {
   List<List<dynamic>> offsets = [];
 
   int offset = 0;
@@ -18,7 +19,7 @@ void serialize(List<Entry> words, String defFile, String indexFile) {
 
   log("serialized", buffer.length);
 
-  var f = File(defFile);
+  var f = await File(defFile).create(recursive: true);
   f.writeAsBytesSync(buffer, flush: true);
 
   List<int> indexBuffer = [];
