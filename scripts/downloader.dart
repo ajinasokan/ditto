@@ -1,11 +1,15 @@
 import 'dart:io';
+
 import 'package:archive/archive.dart';
 import 'package:http/http.dart' as http;
+
+import 'utils.dart';
 
 const URL_OLAM = "https://olam.in/open/enml/olam-enml.csv.zip";
 const URL_DATUK = "https://github.com/knadh/datuk/archive/master.zip";
 
 void main() async {
+  log("download started");
   downloadOlam();
   downloadDatuk();
 }
@@ -18,6 +22,7 @@ void downloadOlam() async {
   if (olam.isCompressed) olam.decompress();
 
   File("olam.csv").writeAsBytes(olam.content);
+  log("Finished downloading Olam dataset");
 }
 
 void downloadDatuk() async {
@@ -28,4 +33,5 @@ void downloadDatuk() async {
   if (olam.isCompressed) olam.decompress();
 
   File("datuk.yaml").writeAsBytes(olam.content);
+  log("Finished downloading Datuk dataset");
 }
