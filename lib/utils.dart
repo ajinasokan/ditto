@@ -12,15 +12,23 @@ List<Map<String, String>> md2map(String md) {
   RegExp linkRegex = new RegExp(r"\[(.*?)\]\((.*?)\)");
 
   int pos = 0;
-  md.replaceAllMapped(linkRegex, (match) {
-    items.add({"type": "text", "value": md.substring(pos, match.start)});
-    items
-        .add({"type": "link", "value": match.group(1), "link": match.group(2)});
+  for (var match in linkRegex.allMatches(md)) {
+    items.add({
+      "type": "text",
+      "value": md.substring(pos, match.start),
+    });
+    items.add({
+      "type": "link",
+      "value": match.group(1),
+      "link": match.group(2),
+    });
     pos = match.end;
-    return md;
-  });
+  }
   if (pos < md.length)
-    items.add({"type": "text", "value": md.substring(pos, md.length)});
+    items.add({
+      "type": "text",
+      "value": md.substring(pos, md.length),
+    });
 
   return items;
 }
