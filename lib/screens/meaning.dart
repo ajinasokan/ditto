@@ -1,8 +1,8 @@
+import 'package:ditto/app.dart';
+import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:store_keeper/store_keeper.dart';
-import 'package:ditto/app.dart';
 
 class Meaning extends StatefulWidget {
   const Meaning();
@@ -55,7 +55,7 @@ class MeaningState extends State<Meaning> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
           store.selectedEntry.word,
-          style: Theme.of(context).textTheme.body1.copyWith(fontSize: 18),
+          style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 18),
         ),
         actions: <Widget>[
           Builder(
@@ -133,7 +133,7 @@ class MeaningState extends State<Meaning> {
                 },
                 child: SelectableText(
                   text,
-                  style: Theme.of(context).textTheme.body2.copyWith(
+                  style: Theme.of(context).textTheme.bodyText1.copyWith(
                         fontSize: 16.0,
                       ),
                 ),
@@ -161,7 +161,7 @@ class MeaningState extends State<Meaning> {
         children: <Widget>[
           Text(
             text,
-            style: Theme.of(context).textTheme.body2.copyWith(
+            style: Theme.of(context).textTheme.bodyText1.copyWith(
                   fontStyle: FontStyle.italic,
                   fontSize: 16.0,
                 ),
@@ -187,11 +187,11 @@ class MeaningState extends State<Meaning> {
                 Container(width: 8.0),
                 Text(
                   "Listen ",
-                  style: Theme.of(context).textTheme.body1,
+                  style: Theme.of(context).textTheme.bodyText2,
                 ),
                 Text(
                   "(Locale: ${store.selectedTTSLanguage})",
-                  style: Theme.of(context).textTheme.subtitle.copyWith(
+                  style: Theme.of(context).textTheme.subtitle2.copyWith(
                         fontSize: 12,
                       ),
                 ),

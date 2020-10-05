@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:feather_icons_flutter/feather_icons_flutter.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import '../app.dart';
 import '../utils.dart';
-import 'package:flutter/gestures.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Settings extends StatelessWidget {
   const Settings();
@@ -21,7 +22,7 @@ class Settings extends StatelessWidget {
       ),
       child: Text(
         title,
-        style: Theme.of(context).textTheme.subtitle,
+        style: Theme.of(context).textTheme.subtitle2,
       ),
     );
   }
@@ -73,8 +74,8 @@ class Settings extends StatelessWidget {
                   return AlertDialog(
                     title: Text(
                       'Available locales in device',
-                      style: Theme.of(context).textTheme.subtitle.copyWith(
-                            color: Theme.of(context).textTheme.body1.color,
+                      style: Theme.of(context).textTheme.subtitle2.copyWith(
+                            color: Theme.of(context).textTheme.bodyText2.color,
                           ),
                     ),
                     titlePadding: EdgeInsets.only(
@@ -169,7 +170,7 @@ class Settings extends StatelessWidget {
             padding: EdgeInsets.all(16),
             child: RichText(
               text: TextSpan(
-                style: Theme.of(context).textTheme.body1,
+                style: Theme.of(context).textTheme.bodyText2,
                 children: md2map(about).map((map) {
                   if (map["type"] == "link")
                     return TextSpan(
@@ -180,13 +181,13 @@ class Settings extends StatelessWidget {
                       text: map["value"],
                       style: Theme.of(context)
                           .textTheme
-                          .body1
+                          .bodyText2
                           .copyWith(color: Colors.blue),
                     );
                   else
                     return TextSpan(
                       text: map["value"],
-                      style: Theme.of(context).textTheme.body1,
+                      style: Theme.of(context).textTheme.bodyText2,
                     );
                 }).toList(),
               ),

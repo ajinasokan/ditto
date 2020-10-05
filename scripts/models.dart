@@ -33,7 +33,6 @@ class Entry {
   }
 
   void fromBytes(List<int> bytes, [int offset = 0]) {
-    var totalLen = bytesToInt(bytes.sublist(offset, offset + 4));
     offset += 4;
     var wordLen = bytesToInt(bytes.sublist(offset, offset + 4));
     offset += 4;
