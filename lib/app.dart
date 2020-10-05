@@ -60,13 +60,13 @@ TextTheme textTheme(bool dark) => TextTheme(
     );
 
 var darkTheme = ThemeData.dark().copyWith(
-  toggleableActiveColor: Colors.teal,
-  accentColor: Colors.tealAccent,
+  toggleableActiveColor: Colors.blue,
+  accentColor: Colors.blueAccent,
   textTheme: textTheme(true),
 );
 
 var lightTheme = ThemeData(
-  primarySwatch: Colors.grey,
+  primarySwatch: Colors.blue,
   primaryColorBrightness: Brightness.light,
   primaryColor: Colors.black,
   textTheme: textTheme(false),

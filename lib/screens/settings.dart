@@ -2,6 +2,7 @@ import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../app.dart';
 import '../utils.dart';
@@ -45,7 +46,8 @@ class Settings extends StatelessWidget {
             leading: Icon(FeatherIcons.moon),
             title: Text("Night mode"),
             subtitle: Text("Switches to darker colors"),
-            trailing: Checkbox(
+            trailing: CupertinoSwitch(
+              activeColor: Theme.of(context).accentColor,
               value: store.nightMode,
               onChanged: (newVal) {
                 ToggleNightMode(newVal);
@@ -56,7 +58,8 @@ class Settings extends StatelessWidget {
             leading: Icon(FeatherIcons.clipboard),
             title: Text("Easy paste"),
             subtitle: Text("Search with copied text"),
-            trailing: Checkbox(
+            trailing: CupertinoSwitch(
+              activeColor: Theme.of(context).accentColor,
               value: store.easyPaste,
               onChanged: (newVal) {
                 ToggleEasyPaste(newVal);
