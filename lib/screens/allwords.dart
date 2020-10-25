@@ -17,8 +17,6 @@ class IndexState extends State<Index> {
 
   @override
   Widget build(BuildContext context) {
-    var datukWords = (StoreKeeper.store as OlamStore).datukWords;
-    var olamWords = (StoreKeeper.store as OlamStore).olamWords;
     var store = (StoreKeeper.store as OlamStore);
 
     StoreKeeper.listen(context, to: [
@@ -41,7 +39,7 @@ class IndexState extends State<Index> {
             Container(
               margin: EdgeInsets.only(bottom: 8.0, right: 24.0),
               child: Text(
-                "${datukWords.length + olamWords.length} items",
+                "${store.words.length} items",
                 style: Theme.of(context).textTheme.subtitle2,
               ),
             ),
@@ -54,7 +52,7 @@ class IndexState extends State<Index> {
               itemExtent: 50.0,
               controller: scrollController,
               padding: EdgeInsets.symmetric(vertical: 4.0),
-              itemCount: datukWords.length + olamWords.length,
+              itemCount: store.words.length,
               itemBuilder: (_, i) {
                 return InkWell(
                   onTap: () {

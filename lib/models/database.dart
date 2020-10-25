@@ -12,7 +12,7 @@ class Database {
 
   void patch(Map _data) {
     if (_data == null) return null;
-    entries = (_data["entries"] ?? [])
+    entries = (_data['entries'] ?? [])
         .map((i) => Entry.fromMap(i))
         .toList()
         .cast<Entry>();
@@ -24,11 +24,11 @@ class Database {
   }
 
   Map<String, dynamic> toMap() => {
-        "entries": entries?.map((i) => i.toMap())?.toList(),
+        'entries': entries?.map((i) => i.toMap())?.toList(),
       };
   String toJson() => json.encode(toMap());
   Map<String, dynamic> serialize() => {
-        "entries": entries.map((dynamic i) => i?.serialize()).toList(),
+        'entries': entries.map((dynamic i) => i?.serialize()).toList(),
       };
 
   factory Database.clone(Database from) => Database(

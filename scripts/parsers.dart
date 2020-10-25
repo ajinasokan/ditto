@@ -11,19 +11,27 @@ List<Entry> parseAlar() {
 
   YamlList entries = loadYaml(corpus);
 
+  Map<String, Entry> entryMap = {};
   List<Entry> words = [];
   entries.forEach((entry) {
-    var alarEntry = Entry();
+    Entry alarEntry;
+    if (entryMap.containsKey(entry["entry"])) {
+      alarEntry = entryMap[entry["entry"]];
+    } else {
+      alarEntry = Entry();
+      words.add(alarEntry);
+      entryMap[entry["entry"]] = alarEntry;
+    }
+
     alarEntry.word = entry["entry"];
     alarEntry.info = entry["info"];
-    alarEntry.definitions = [];
+    alarEntry.definitions ??= [];
     for (int i = 0; i < entry["defs"].length; i++) {
       var def = Definition();
       def.partOfSpeech = entry["defs"][i]["type"];
       def.definition = entry["defs"][i]["entry"];
       alarEntry.definitions.add(def);
     }
-    words.add(alarEntry);
   });
   log("alar count", words.length);
   return words;

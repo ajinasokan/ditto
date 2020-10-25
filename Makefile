@@ -14,5 +14,8 @@ alar:
 download:
 	cd scripts; dart downloader.dart
 
-db:
-	cd scripts; dart builder.dart
+olam-db:
+	cd scripts; dart builder.dart olam
+
+alar-db:
+	cd scripts; dart builder.dart alar

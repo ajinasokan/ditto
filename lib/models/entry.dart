@@ -32,10 +32,10 @@ class Entry {
 
   void patch(Map _data) {
     if (_data == null) return null;
-    databaseId = _data["database_id"];
-    word = _data["word"];
-    info = _data["info"];
-    definitions = (_data["definitions"] ?? [])
+    databaseId = _data['database_id'];
+    word = _data['word'];
+    info = _data['info'];
+    definitions = (_data['definitions'] ?? [])
         .map((i) => Definition.fromMap(i))
         .toList()
         .cast<Definition>();
@@ -48,17 +48,17 @@ class Entry {
   }
 
   Map<String, dynamic> toMap() => {
-        "database_id": databaseId,
-        "word": word,
-        "info": info,
-        "definitions": definitions?.map((i) => i.toMap())?.toList(),
+        'database_id': databaseId,
+        'word': word,
+        'info': info,
+        'definitions': definitions?.map((i) => i.toMap())?.toList(),
       };
   String toJson() => json.encode(toMap());
   Map<String, dynamic> serialize() => {
-        "databaseId": databaseId,
-        "word": word,
-        "info": info,
-        "definitions": definitions.map((dynamic i) => i?.serialize()).toList(),
+        'databaseId': databaseId,
+        'word': word,
+        'info': info,
+        'definitions': definitions.map((dynamic i) => i?.serialize()).toList(),
       };
 
   factory Entry.clone(Entry from) => Entry(

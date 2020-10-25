@@ -10,11 +10,6 @@ import '../utils.dart';
 class Settings extends StatelessWidget {
   const Settings();
 
-  final about =
-      """This app is built on top of [Olam](https://olam.in/) the open source English-Malayalam, Malayalam-Malayalam dictionary.
-      \nApp made with ❤ by [Ajin Asokan](https://ajinasokan.com).
-      """;
-
   Widget header(BuildContext context, String title) {
     return Container(
       padding: EdgeInsets.only(bottom: 16.0, left: 16.0),
@@ -174,7 +169,7 @@ class Settings extends StatelessWidget {
             child: RichText(
               text: TextSpan(
                 style: Theme.of(context).textTheme.bodyText2,
-                children: md2map(about).map((map) {
+                children: md2map(flavour.about).map((map) {
                   if (map["type"] == "link")
                     return TextSpan(
                       recognizer: TapGestureRecognizer()

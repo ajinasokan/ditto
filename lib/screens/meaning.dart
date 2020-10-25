@@ -25,7 +25,8 @@ class MeaningState extends State<Meaning> {
     List<Widget> items = [
       Visibility(
         child: header(store),
-        visible: store.selectedEntry.databaseId == OLAM,
+        visible:
+            store.selectedEntry.word.startsWith(new RegExp(r'[\.A-Za-z0-9]')),
       ),
       Container(height: 16.0),
     ];
@@ -36,7 +37,7 @@ class MeaningState extends State<Meaning> {
       meaning[def.partOfSpeech].add(Container(height: 8.0));
       meaning[def.partOfSpeech].add(listItem(def.definition));
     });
-    (meaning.keys.toList()..sort()).forEach((pos) {
+    (meaning.keys.toList()).forEach((pos) {
       items.add(Container(height: 16.0));
       items.add(itemHeader(pos));
       items.add(Column(

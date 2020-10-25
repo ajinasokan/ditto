@@ -22,8 +22,8 @@ class Definition {
 
   void patch(Map _data) {
     if (_data == null) return null;
-    definition = _data["definition"];
-    partOfSpeech = _data["part_of_speech"];
+    definition = _data['definition'];
+    partOfSpeech = _data['part_of_speech'];
     init();
   }
 
@@ -33,13 +33,13 @@ class Definition {
   }
 
   Map<String, dynamic> toMap() => {
-        "definition": definition,
-        "part_of_speech": partOfSpeech,
+        'definition': definition,
+        'part_of_speech': partOfSpeech,
       };
   String toJson() => json.encode(toMap());
   Map<String, dynamic> serialize() => {
-        "definition": definition,
-        "partOfSpeech": partOfSpeech,
+        'definition': definition,
+        'partOfSpeech': partOfSpeech,
       };
 
   factory Definition.clone(Definition from) => Definition(

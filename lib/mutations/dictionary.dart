@@ -3,9 +3,6 @@ import 'dart:typed_data';
 import 'package:ditto/app.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-const OLAM = 0;
-const DATUK = 1;
-
 class LoadWords extends Mutation<OlamStore> {
   final BuildContext context;
 
@@ -18,7 +15,7 @@ class LoadWords extends Mutation<OlamStore> {
     var allFiles = await dir.parent.list(recursive: true).toList();
 
     for (var file in allFiles) {
-      if (file is File && file.path.contains("olam_words.bin")) {
+      if (file is File && file.path.contains("words.bin")) {
         assetDir = file.parent.path;
         break;
       }
@@ -27,20 +24,18 @@ class LoadWords extends Mutation<OlamStore> {
     // print(assetDir);
 
     var data = assetDir == ""
-        ? await DefaultAssetBundle.of(context)
-            .loadString("assets/olam_words.bin")
-        : File(assetDir + "/olam_words.bin").readAsStringSync();
+        ? await DefaultAssetBundle.of(context).loadString("assets/words.bin")
+        : File(assetDir + "/words.bin").readAsStringSync();
 
-    store.olamWords.clear();
-    store.olamWords.addAll(data.split("\n"));
+    store.words.clear();
+    store.words.addAll(data.split("\n"));
 
-    data = assetDir == ""
-        ? await DefaultAssetBundle.of(context)
-            .loadString("assets/datuk_words.bin")
-        : File(assetDir + "/datuk_words.bin").readAsStringSync();
-    DefaultAssetBundle.of(context);
-    store.datukWords.clear();
-    store.datukWords.addAll(data.split("\n"));
+    // data = assetDir == ""
+    //     ? await DefaultAssetBundle.of(context).loadString("assets/words.bin")
+    //     : File(assetDir + "/words.bin").readAsStringSync();
+    // DefaultAssetBundle.of(context);
+    // store.datukWords.clear();
+    // store.datukWords.addAll(data.split("\n"));
   }
 }
 
@@ -50,9 +45,7 @@ class FetchMeaning extends Mutation<OlamStore> {
   FetchMeaning(this.selectedWord);
 
   void exec() async {
-    ByteData buffer = selectedWord.databaseId == OLAM
-        ? await rootBundle.load("assets/olam_defs.bin")
-        : await rootBundle.load("assets/datuk_defs.bin");
+    ByteData buffer = await rootBundle.load("assets/defs.bin");
     int packLen = buffer.getUint32(selectedWord.offset);
 
     Uint8List bytes = Uint8List.view(
@@ -92,7 +85,6 @@ class FetchMeaning extends Mutation<OlamStore> {
     }
 
     var entry = Entry(
-      databaseId: selectedWord.databaseId,
       word: word,
       info: info,
       definitions: definitions,
@@ -114,21 +106,15 @@ class SearchWord extends Mutation<OlamStore> {
   SearchWord(this.query);
 
   static Word getWordAt(int index, OlamStore store) {
-    var entry;
-    if (index < store.olamWords.length) {
-      entry = store.olamWords[index].split("\t");
-    } else {
-      entry = store.datukWords[index - store.olamWords.length].split("\t");
-    }
+    var entry = store.words[index].split("\t");
     return Word(
       word: entry[1],
       offset: int.parse(entry[0]),
       definitionCount: int.parse(entry[2]),
-      databaseId: index < store.olamWords.length ? OLAM : DATUK,
     );
   }
 
-  int get totalLength => store.olamWords.length + store.datukWords.length;
+  int get totalLength => store.words.length;
 
   void exec() {
     store.query = query;

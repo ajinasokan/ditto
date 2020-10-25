@@ -25,9 +25,7 @@ class OlamStore extends Store {
   @pragma('json:clipped_string')
   String clippedString = "";
 
-  List<String> olamWords = [];
-
-  List<String> datukWords = [];
+  List<String> words = [];
 
   Entry selectedEntry = Entry();
 
@@ -46,8 +44,7 @@ class OlamStore extends Store {
     this.nightMode,
     this.easyPaste,
     this.clippedString,
-    this.olamWords,
-    this.datukWords,
+    this.words,
     this.selectedEntry,
     this.selectedTTSLanguage,
     this.ttsLanguages,
@@ -64,8 +61,7 @@ class OlamStore extends Store {
     if (nightMode == null) nightMode = false;
     if (easyPaste == null) easyPaste = false;
     if (clippedString == null) clippedString = "";
-    if (olamWords == null) olamWords = [];
-    if (datukWords == null) datukWords = [];
+    if (words == null) words = [];
     if (selectedEntry == null) selectedEntry = Entry();
     if (selectedTTSLanguage == null) selectedTTSLanguage = "Default";
     if (ttsLanguages == null) ttsLanguages = {"Default": "default"};
@@ -73,19 +69,19 @@ class OlamStore extends Store {
 
   void patch(Map _data) {
     if (_data == null) return null;
-    recent = (_data["recent"] ?? [])
+    recent = (_data['recent'] ?? [])
         .map((i) => Entry.fromMap(i))
         .toList()
         .cast<Entry>();
-    bookmarks = (_data["bookmarks"] ?? [])
+    bookmarks = (_data['bookmarks'] ?? [])
         .map((i) => Entry.fromMap(i))
         .toList()
         .cast<Entry>();
-    nightMode = _data["night_mode"];
-    easyPaste = _data["easy_paste"];
-    clippedString = _data["clipped_string"];
-    selectedTTSLanguage = _data["selected_tts"];
-    ttsLanguages = _data["tts_langs"];
+    nightMode = _data['night_mode'];
+    easyPaste = _data['easy_paste'];
+    clippedString = _data['clipped_string'];
+    selectedTTSLanguage = _data['selected_tts'];
+    ttsLanguages = _data['tts_langs'];
     init();
   }
 
@@ -95,30 +91,29 @@ class OlamStore extends Store {
   }
 
   Map<String, dynamic> toMap() => {
-        "recent": recent?.map((i) => i.toMap())?.toList(),
-        "bookmarks": bookmarks?.map((i) => i.toMap())?.toList(),
-        "night_mode": nightMode,
-        "easy_paste": easyPaste,
-        "clipped_string": clippedString,
-        "selected_tts": selectedTTSLanguage,
-        "tts_langs": ttsLanguages,
+        'recent': recent?.map((i) => i.toMap())?.toList(),
+        'bookmarks': bookmarks?.map((i) => i.toMap())?.toList(),
+        'night_mode': nightMode,
+        'easy_paste': easyPaste,
+        'clipped_string': clippedString,
+        'selected_tts': selectedTTSLanguage,
+        'tts_langs': ttsLanguages,
       };
   String toJson() => json.encode(toMap());
   Map<String, dynamic> serialize() => {
-        "storeLoaded": storeLoaded,
-        "query": query,
-        "searchResults":
+        'storeLoaded': storeLoaded,
+        'query': query,
+        'searchResults':
             searchResults.map((dynamic i) => i?.serialize()).toList(),
-        "recent": recent.map((dynamic i) => i?.serialize()).toList(),
-        "bookmarks": bookmarks.map((dynamic i) => i?.serialize()).toList(),
-        "nightMode": nightMode,
-        "easyPaste": easyPaste,
-        "clippedString": clippedString,
-        "olamWords": olamWords,
-        "datukWords": datukWords,
-        "selectedEntry": selectedEntry?.serialize(),
-        "selectedTTSLanguage": selectedTTSLanguage,
-        "ttsLanguages": ttsLanguages,
+        'recent': recent.map((dynamic i) => i?.serialize()).toList(),
+        'bookmarks': bookmarks.map((dynamic i) => i?.serialize()).toList(),
+        'nightMode': nightMode,
+        'easyPaste': easyPaste,
+        'clippedString': clippedString,
+        'words': words,
+        'selectedEntry': selectedEntry?.serialize(),
+        'selectedTTSLanguage': selectedTTSLanguage,
+        'ttsLanguages': ttsLanguages,
       };
 
   void patchWith(OlamStore clone) {
@@ -130,8 +125,7 @@ class OlamStore extends Store {
     nightMode = clone.nightMode;
     easyPaste = clone.easyPaste;
     clippedString = clone.clippedString;
-    olamWords = clone.olamWords;
-    datukWords = clone.datukWords;
+    words = clone.words;
     selectedEntry = clone.selectedEntry;
     selectedTTSLanguage = clone.selectedTTSLanguage;
     ttsLanguages = clone.ttsLanguages;
@@ -146,8 +140,7 @@ class OlamStore extends Store {
         nightMode: from.nightMode,
         easyPaste: from.easyPaste,
         clippedString: from.clippedString,
-        olamWords: from.olamWords,
-        datukWords: from.datukWords,
+        words: from.words,
         selectedEntry: from.selectedEntry,
         selectedTTSLanguage: from.selectedTTSLanguage,
         ttsLanguages: from.ttsLanguages,
