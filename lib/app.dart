@@ -1,6 +1,7 @@
 import 'package:ditto/models/index.dart';
 import 'package:flutter/material.dart';
 import 'package:store_keeper/store_keeper.dart';
+import 'package:ditto/flavours.dart';
 
 export 'dart:async';
 export 'dart:convert';
@@ -16,9 +17,10 @@ export 'package:flutter/material.dart';
 export 'package:flutter_tts/flutter_tts.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:store_keeper/store_keeper.dart';
-
+export 'package:ditto/flavours.dart';
 export 'utils.dart';
 
+Flavour flavour = OlamFlavour();
 var extraFontSize = 0.0;
 var fontFamily = "NotoSans";
 

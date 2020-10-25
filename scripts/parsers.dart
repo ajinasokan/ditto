@@ -4,6 +4,31 @@ import 'utils.dart';
 import 'package:csv/csv.dart';
 import 'package:yaml/yaml.dart';
 
+List<Entry> parseAlar() {
+  log("alar", "loading");
+  var corpus = File("alar.yaml").readAsStringSync();
+  log("alar", "parsing");
+
+  YamlList entries = loadYaml(corpus);
+
+  List<Entry> words = [];
+  entries.forEach((entry) {
+    var alarEntry = Entry();
+    alarEntry.word = entry["entry"];
+    alarEntry.info = entry["info"];
+    alarEntry.definitions = [];
+    for (int i = 0; i < entry["defs"].length; i++) {
+      var def = Definition();
+      def.partOfSpeech = entry["defs"][i]["type"];
+      def.definition = entry["defs"][i]["entry"];
+      alarEntry.definitions.add(def);
+    }
+    words.add(alarEntry);
+  });
+  log("alar count", words.length);
+  return words;
+}
+
 List<Entry> parseDatuk() {
   log("datuk", "loading");
   var corpus = File("datuk.yaml").readAsStringSync();
@@ -17,7 +42,7 @@ List<Entry> parseDatuk() {
     datukEntry.word = entry["entry"];
     datukEntry.info = entry["info"];
     datukEntry.definitions = [];
-    for (int i = 1; i < entry["defs"].length; i++) {
+    for (int i = 0; i < entry["defs"].length; i++) {
       var def = Definition();
       def.partOfSpeech = entry["defs"][i]["type"];
       def.definition = entry["defs"][i]["entry"];

@@ -18,7 +18,7 @@ class _MainState extends State<Main> {
           child: Align(
             alignment: Alignment.center,
             child: Text(
-              'ഓളം',
+              flavour.title,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline6,
             ),
@@ -44,19 +44,19 @@ class _MainState extends State<Main> {
           items: [
             BottomNavigationBarItem(
               icon: Icon(FeatherIcons.search),
-              title: Text("തിരയുക"),
+              title: Text(flavour.searchTab),
             ),
             BottomNavigationBarItem(
               icon: Icon(FeatherIcons.bookmark),
-              title: Text("ശേഖരം"),
+              title: Text(flavour.bookmarkTab),
             ),
             BottomNavigationBarItem(
               icon: Icon(FeatherIcons.list),
-              title: Text("പദമാലിക"),
+              title: Text(flavour.wordIndexTab),
             ),
             BottomNavigationBarItem(
               icon: Icon(FeatherIcons.settings),
-              title: Text("സെറ്റിങ്സ്"),
+              title: Text(flavour.settingsTab),
             ),
           ],
         ),

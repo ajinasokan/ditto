@@ -121,9 +121,8 @@ class SearchState extends State<Search>
                         }
                       },
                       decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'english word / മലയാള പദം',
-                      ),
+                          border: InputBorder.none,
+                          hintText: flavour.searchHint),
                     ),
                   ),
                   SquareButton(

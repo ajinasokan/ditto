@@ -48,3 +48,4 @@ app.*.map.json
 assets/**
 scripts/datuk.yaml
 scripts/olam.csv
+scripts/alar.yaml

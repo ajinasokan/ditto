@@ -7,31 +7,45 @@ import 'utils.dart';
 
 const URL_OLAM = "https://olam.in/open/enml/olam-enml.csv.zip";
 const URL_DATUK = "https://github.com/knadh/datuk/archive/master.zip";
+const URL_ALAR = "https://github.com/alar-dict/data/archive/master.zip";
 
-void main() async {
+void main(List<String> args) async {
+  bool all = args.isEmpty;
+
   log("download started");
-  downloadOlam();
-  downloadDatuk();
+
+  if (all || args.contains("olam")) {
+    downloadFromZip(
+      url: URL_OLAM,
+      src: "olam-enml.csv",
+      dst: "olam.csv",
+    );
+  }
+
+  if (all || args.contains("datuk")) {
+    downloadFromZip(
+      url: URL_DATUK,
+      src: "datuk-master/datuk.yaml",
+      dst: "datuk.yaml",
+    );
+  }
+
+  if (all || args.contains("alar")) {
+    downloadFromZip(
+      url: URL_ALAR,
+      src: "data-master/alar.yml",
+      dst: "alar.yaml",
+    );
+  }
 }
 
-void downloadOlam() async {
-  final olam = ZipDecoder()
-      .decodeBytes((await http.get(URL_OLAM)).bodyBytes)
-      .findFile("olam-enml.csv");
+void downloadFromZip({String url, String src, String dst}) async {
+  log("Downloading $url");
+  final zippedFile =
+      ZipDecoder().decodeBytes((await http.get(url)).bodyBytes).findFile(src);
 
-  if (olam.isCompressed) olam.decompress();
+  if (zippedFile.isCompressed) zippedFile.decompress();
 
-  File("olam.csv").writeAsBytes(olam.content);
-  log("Finished downloading Olam dataset");
-}
-
-void downloadDatuk() async {
-  final olam = ZipDecoder()
-      .decodeBytes((await http.get(URL_DATUK)).bodyBytes)
-      .findFile("datuk-master/datuk.yaml");
-
-  if (olam.isCompressed) olam.decompress();
-
-  File("datuk.yaml").writeAsBytes(olam.content);
-  log("Finished downloading Datuk dataset");
+  File(dst).writeAsBytes(zippedFile.content);
+  log("Finished downloading $dst");
 }
