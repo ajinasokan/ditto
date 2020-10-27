@@ -36,7 +36,7 @@ class OlamFlavour extends Flavour {
 
 class AlarFlavour extends Flavour {
   @override
-  String get bookmarkTab => "[bookmarks]";
+  String get bookmarkTab => "ಸಂಗ್ರಹ";
 
   @override
   String get about =>
@@ -45,17 +45,17 @@ class AlarFlavour extends Flavour {
       """;
 
   @override
-  String get searchHint => "[search kannada word]";
+  String get searchHint => "ಕನ್ನಡ ಪದ";
 
   @override
-  String get searchTab => "[search]";
+  String get searchTab => "ಹುಡುಕುವುದು";
 
   @override
-  String get settingsTab => "[settings]";
+  String get settingsTab => "ಸೆಟಿಂಗ್ಸ್";
 
   @override
   String get title => "ಅಲರ್";
 
   @override
-  String get wordIndexTab => "[index]";
+  String get wordIndexTab => "ಸೂಚಿ";
 }
