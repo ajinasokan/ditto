@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:ditto/app.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_raw_assets/flutter_raw_assets.dart';
 
 class LoadWords extends Mutation<OlamStore> {
   final BuildContext context;
@@ -9,33 +9,11 @@ class LoadWords extends Mutation<OlamStore> {
   LoadWords(this.context);
 
   exec() async {
-    var assetDir = "";
-    var dir = await getTemporaryDirectory();
-
-    var allFiles = await dir.parent.list(recursive: true).toList();
-
-    for (var file in allFiles) {
-      if (file is File && file.path.contains("words.bin")) {
-        assetDir = file.parent.path;
-        break;
-      }
-    }
-
-    // print(assetDir);
-
-    var data = assetDir == ""
-        ? await DefaultAssetBundle.of(context).loadString("assets/words.bin")
-        : File(assetDir + "/words.bin").readAsStringSync();
+    final data =
+        await DefaultAssetBundle.of(context).loadString("assets/words.bin");
 
     store.words.clear();
     store.words.addAll(data.split("\n"));
-
-    // data = assetDir == ""
-    //     ? await DefaultAssetBundle.of(context).loadString("assets/words.bin")
-    //     : File(assetDir + "/words.bin").readAsStringSync();
-    // DefaultAssetBundle.of(context);
-    // store.datukWords.clear();
-    // store.datukWords.addAll(data.split("\n"));
   }
 }
 
@@ -45,17 +23,18 @@ class FetchMeaning extends Mutation<OlamStore> {
   FetchMeaning(this.selectedWord);
 
   void exec() async {
-    ByteData buffer = await rootBundle.load("assets/defs.bin");
-    int packLen = buffer.getUint32(selectedWord.offset);
+    // find length of the block
+    final packLenBytes = await FlutterRawAssets.getBytes(
+        "assets/defs.bin", selectedWord.offset, 4);
 
-    Uint8List bytes = Uint8List.view(
-      buffer.buffer,
-      selectedWord.offset,
-      4 + packLen,
-    );
+    int packLen = packLenBytes.buffer.asByteData().getInt32(0);
 
+    // read the whole block
+    final buffer = await FlutterRawAssets.getBytes(
+        "assets/defs.bin", selectedWord.offset + 4, packLen);
+
+    Uint8List bytes = Uint8List.view(buffer.buffer, 0, packLen);
     int offset = 0;
-    offset += 4;
     var wordLen = bytesToInt(bytes.sublist(offset, offset + 4));
     offset += 4;
     var word = utf8.decode(bytes.sublist(offset, offset + wordLen));
