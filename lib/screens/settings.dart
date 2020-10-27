@@ -3,6 +3,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:file_picker/file_picker.dart';
 
 import '../app.dart';
 import '../utils.dart';
@@ -160,6 +164,47 @@ class Settings extends StatelessWidget {
                   );
                 },
               );
+            },
+          ),
+          ListTile(
+            title: Text("Export data"),
+            onTap: () async {
+              if ((await Permission.storage.status).isPermanentlyDenied) {
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text("Storage permission is permanently denied"),
+                  backgroundColor: Colors.red,
+                ));
+                openAppSettings();
+                return;
+              }
+              if (await Permission.storage.request().isGranted) {
+                final path = p.join("/sdcard", "${flavour.name}_export.json");
+                await File(path).writeAsString(store.toJson());
+
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text("Saved to $path"),
+                ));
+              }
+            },
+          ),
+          ListTile(
+            title: Text("Import data"),
+            onTap: () async {
+              FilePickerResult result = await FilePicker.platform.pickFiles(
+                type: FileType.custom,
+                allowedExtensions: ['json'],
+              );
+              if (result != null && result.paths.isNotEmpty) {
+                final json = await File(result.paths.first).readAsString();
+                store.patchWith(OlamStore.fromJson(json));
+                SaveStore();
+                await Future.delayed(Duration(milliseconds: 500));
+                LoadStore();
+                await Future.delayed(Duration(milliseconds: 100));
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text("Import successful"),
+                ));
+              }
             },
           ),
           Container(height: 16),

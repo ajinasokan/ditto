@@ -1,4 +1,5 @@
 abstract class Flavour {
+  String get name;
   String get title;
   String get searchHint;
   String get searchTab;
@@ -9,6 +10,9 @@ abstract class Flavour {
 }
 
 class OlamFlavour extends Flavour {
+  @override
+  String get name => "olam";
+
   @override
   String get bookmarkTab => "ശേഖരം";
 
@@ -35,6 +39,9 @@ class OlamFlavour extends Flavour {
 }
 
 class AlarFlavour extends Flavour {
+  @override
+  String get name => "alar";
+
   @override
   String get bookmarkTab => "ಸಂಗ್ರಹ";
 
