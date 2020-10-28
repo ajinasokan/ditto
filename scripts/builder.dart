@@ -17,8 +17,16 @@ void main(List<String> args) {
 
   if (args.contains("alar")) {
     alar = parseAlar();
-    // log("alar", "sorting");
-    // alar.sort((a, b) => stem(a.word).compareTo(stem(b.word)));
+    log("alar", "sorting");
+    alar.sort((a, b) => stem(a.word).compareTo(stem(b.word)));
+    alar = alar.where((element) {
+      if (element.word.codeUnitAt(0) >= 3200 &&
+          element.word.codeUnitAt(0) <= 3327) {
+        return true;
+      }
+      print("removing ${element.word}");
+      return false;
+    }).toList();
     serialize(alar, "../assets/defs.bin", "../assets/words.bin");
   }
 }
