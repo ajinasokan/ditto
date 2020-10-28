@@ -47,7 +47,7 @@ class AlarFlavour extends Flavour {
 
   @override
   String get about =>
-      """This app is built on top of [Alar](https://alar.ink) V. Krishna's Kannada → English dictionary.
+      """This app is built on top of [Alar](https://alar.ink), V. Krishna's Kannada → English dictionary.
       \nApp made with ❤ by [Ajin Asokan](https://ajinasokan.com).
       """;
 
@@ -55,10 +55,10 @@ class AlarFlavour extends Flavour {
   String get searchHint => "ಕನ್ನಡ ಪದ";
 
   @override
-  String get searchTab => "ಹುಡುಕುವುದು";
+  String get searchTab => "ಹುಡುಕು";
 
   @override
-  String get settingsTab => "ಸೆಟಿಂಗ್ಸ್";
+  String get settingsTab => "ಸೆಟ್ಟಿಂಗ್ಸ್";
 
   @override
   String get title => "ಅಲರ್";
