@@ -57,7 +57,7 @@ class AlarFlavour extends Flavour {
       """;
 
   @override
-  String get searchHint => "ಕನ್ನಡ ಪದ";
+  String get searchHint => "eg: ಹೆಸರು, hesaru";
 
   @override
   String get searchTab => "ಹುಡುಕು";
