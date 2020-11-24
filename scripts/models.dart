@@ -3,6 +3,10 @@ import 'dart:typed_data';
 
 class Entry {
   String word;
+  String hash;
+  String phone = "";
+  int index;
+  int offset;
   String info;
   List<Definition> definitions;
 

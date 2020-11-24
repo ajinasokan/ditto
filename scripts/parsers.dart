@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'package:dart_phonetics/dart_phonetics.dart';
+import 'package:ditto/word_hashing.dart';
+
 import 'models.dart';
 import 'utils.dart';
 import 'package:csv/csv.dart';
@@ -12,6 +15,7 @@ List<Entry> parseAlar() {
   YamlList entries = loadYaml(corpus);
 
   Map<String, Entry> entryMap = {};
+  // Map<String, String> phoneticMap = {};
   List<Entry> words = [];
   entries.forEach((entry) {
     Entry alarEntry;
@@ -25,6 +29,12 @@ List<Entry> parseAlar() {
 
     alarEntry.word = entry["entry"];
     alarEntry.info = entry["info"];
+    alarEntry.phone = entry["phone"];
+    // for (var codeUnit in alarEntry.phone.codeUnits) {
+    //   final char = String.fromCharCode(codeUnit);
+    //   phoneticMap[char] = "";
+    // }
+    alarEntry.hash = KNPhone.instance.encode(alarEntry.word);
     alarEntry.definitions ??= [];
     for (int i = 0; i < entry["defs"].length; i++) {
       var def = Definition();
@@ -33,6 +43,7 @@ List<Entry> parseAlar() {
       alarEntry.definitions.add(def);
     }
   });
+  // print(phoneticMap.keys.toList());
   log("alar count", words.length);
   return words;
 }
@@ -48,6 +59,7 @@ List<Entry> parseDatuk() {
   entries.forEach((entry) {
     var datukEntry = Entry();
     datukEntry.word = entry["entry"];
+    datukEntry.hash = MLPhone.instance.encode(datukEntry.word);
     datukEntry.info = entry["info"];
     datukEntry.definitions = [];
     for (int i = 0; i < entry["defs"].length; i++) {
@@ -75,6 +87,9 @@ List<Entry> parseOlam() {
   log("dict", "building structures");
   Map<String, Entry> map = {};
   List<Entry> words = [];
+
+  final metaPhone = DoubleMetaphone.withMaxLength(12);
+
   for (int i = 1; i < items.length; i++) {
     String itemWord = items[i][1].toString();
     String itemPOS = items[i][2].toString();
@@ -92,6 +107,7 @@ List<Entry> parseOlam() {
     }
 
     word.word = itemWord;
+    word.hash = metaPhone.encode(itemWord)?.primary ?? "";
     var def = Definition();
     def.partOfSpeech = itemPOS;
     def.definition = itemDef;

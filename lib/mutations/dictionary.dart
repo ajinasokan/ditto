@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:ditto/app.dart';
 import 'package:flutter_raw_assets/flutter_raw_assets.dart';
+import 'package:dart_phonetics/dart_phonetics.dart';
 
 class LoadWords extends Mutation<OlamStore> {
   final BuildContext context;
@@ -9,11 +10,14 @@ class LoadWords extends Mutation<OlamStore> {
   LoadWords(this.context);
 
   exec() async {
-    final data =
+    var data =
         await DefaultAssetBundle.of(context).loadString("assets/words.bin");
-
     store.words.clear();
     store.words.addAll(data.split("\n"));
+
+    data = await DefaultAssetBundle.of(context).loadString("assets/hashes.bin");
+    store.hashes.clear();
+    store.hashes.addAll(data.split("\n"));
   }
 }
 
@@ -95,19 +99,32 @@ class SearchWord extends Mutation<OlamStore> {
 
   int get totalLength => store.words.length;
 
-  void exec() {
-    store.query = query;
-    store.searchResults.clear();
+  static int binarySearch(
+      String Function(int) itemGetter, int count, String value) {
+    var min = 0;
+    var max = count;
+    while (min < max) {
+      var mid = min + ((max - min) >> 1);
+      var element = itemGetter(mid);
+      var comp = element.compareTo(value);
+      if (comp == 0) return mid;
+      if (comp < 0) {
+        min = mid + 1;
+      } else {
+        max = mid;
+      }
+    }
+    return -1;
+  }
 
-    query = stem(query);
-    if (query.trim() == "") return;
-
+  static int approxBinarySearch(
+      String Function(int) itemGetter, int count, String item) {
     int min = 0;
-    int max = totalLength;
+    int max = count;
     int mid;
     while (min < max) {
       mid = min + ((max - min) >> 1);
-      int comp = stem(getWordAt(mid, store).word).compareTo(query);
+      int comp = itemGetter(mid).compareTo(item);
       if (comp == 0) break;
       if (comp < 0) {
         min = mid + 1;
@@ -115,21 +132,78 @@ class SearchWord extends Mutation<OlamStore> {
         max = mid;
       }
     }
-    if (stem(getWordAt(mid, store).word).compareTo(query) == 0) {
-    } else if (mid - 1 >= 0 &&
-        stem(getWordAt(mid - 1, store).word).startsWith(query)) {
+
+    // backtrack to the first occurance of the item
+    while (mid - 1 >= 0 && itemGetter(mid - 1).startsWith(item)) {
       mid = mid - 1;
-    } else if (mid + 1 < totalLength &&
-        stem(getWordAt(mid + 1, store).word).startsWith(query)) {
-      mid = mid + 1;
     }
 
-    var endIndex = mid + 10 < totalLength ? mid + 10 : totalLength;
-    for (int i = mid; i < endIndex; i++) {
-      var word = getWordAt(i, store);
-      if (stem(word.word).contains(query)) {
+    return mid;
+  }
+
+  void exec() {
+    store.query = query;
+    store.searchResults.clear();
+
+    // 0. lower case query
+    // 1. search for exact match with binarySearch.
+    //    if match found then add that and next 10 items to search results.
+    // 2. else build hash of query
+    //   2.1 if query is in english do DoubleMetaphone
+    //       if in malayalam do mlphone
+    //       if in kannada do knphone
+    //   2.2 do approxBinarySearch on hashes.
+    //       check index of the result in the word list.
+    //       add word and next 10 items to results.
+
+    // NOOP if query is blank
+    if (query.trim() == "") return;
+
+    query = query.toLowerCase();
+
+    // exact match search
+    int mid = binarySearch(
+      (i) => store.words[i].split("\t")[1].toLowerCase(),
+      store.words.length,
+      query.toLowerCase(),
+    );
+    if (mid != -1) {
+      var endIndex = mid + 30 < totalLength ? mid + 30 : totalLength;
+      for (int i = mid; i < endIndex; i++) {
+        var word = getWordAt(i, store);
         store.searchResults.add(word);
       }
+      return;
+    }
+
+    final isKannada = (String input) =>
+        input.codeUnitAt(0) >= 3200 && input.codeUnitAt(0) <= 3327;
+    final isMalayalam = (String input) =>
+        input.codeUnitAt(0) >= 3328 && input.codeUnitAt(0) <= 3455;
+
+    if (isKannada(query)) {
+      query = KNPhone.instance.encode(query);
+    } else if (isMalayalam(query)) {
+      query = MLPhone.instance.encode(query);
+    } else {
+      query = DoubleMetaphone.withMaxLength(12).encode(query)?.primary ?? "";
+    }
+
+    // problem is multiple words result in same hash
+    // when binary searched hash might be found at end of the list
+    // of similar hashes
+    mid = approxBinarySearch(
+      (i) => store.hashes[i].split("\t")[0],
+      store.hashes.length,
+      query,
+    );
+
+    var endIndex = mid + 30 < totalLength ? mid + 30 : totalLength;
+    for (int i = mid; i < endIndex; i++) {
+      // print(store.hashes[i].split("\t")[0]);
+      // print(int.parse(store.hashes[i].split("\t")[1]));
+      var word = getWordAt(int.parse(store.hashes[i].split("\t")[1]), store);
+      store.searchResults.add(word);
     }
   }
 }

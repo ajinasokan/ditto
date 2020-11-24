@@ -1,7 +1,7 @@
 name: ditto
 description: A new Flutter project.
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.0.0+2
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -20,6 +20,7 @@ dependencies:
   path_provider: 1.6.8
   store_keeper: 0.0.4
   flutter_displaymode: 0.1.0
+  dart_phonetics: 0.2.1
   flutter_raw_assets:
     git:
       url: https://github.com/ajinasokan/flutter_raw_assets

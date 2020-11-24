@@ -32,7 +32,3 @@ List<Map<String, String>> md2map(String md) {
 
   return items;
 }
-
-String stem(String input) {
-  return input.toLowerCase().split(" ").join();
-}

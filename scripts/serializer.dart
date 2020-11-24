@@ -4,18 +4,25 @@ import 'dart:io';
 import 'models.dart';
 import 'utils.dart';
 
-void serialize(List<Entry> words, String defFile, String indexFile) async {
+void serialize(
+  List<Entry> words,
+  String defFile,
+  String indexFile,
+) async {
   List<List<dynamic>> offsets = [];
 
   int offset = 0;
   List<int> buffer = [];
 
-  words.forEach((word) {
+  for (var i = 0; i < words.length; i++) {
+    final word = words[i];
+    word.index = i;
+    word.offset = offset;
     offsets.add([offset, word.word, word.definitions.length]);
     var wordBytes = word.toBytes();
     buffer.addAll(wordBytes);
     offset += wordBytes.length;
-  });
+  }
 
   log("serialized", buffer.length);
 
@@ -33,6 +40,22 @@ void serialize(List<Entry> words, String defFile, String indexFile) async {
 
   var w = File(indexFile);
   w.writeAsBytesSync(indexBuffer, flush: true);
+}
+
+void serializeHashes(
+  List<Entry> words,
+  String hashFile,
+) {
+  List<int> hashBuffer = [];
+  for (int i = 0; i < words.length; i++) {
+    var item = [words[i].hash, words[i].index];
+    if (i == words.length - 1)
+      hashBuffer.addAll(utf8.encode(item.join("\t")));
+    else
+      hashBuffer.addAll(utf8.encode(item.join("\t") + "\n"));
+  }
+  var w = File(hashFile);
+  w.writeAsBytesSync(hashBuffer, flush: true);
 }
 
 List<List<String>> deserializeWords(String indexFile) {

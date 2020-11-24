@@ -1,3 +1,5 @@
+import 'package:ditto/word_hashing.dart';
+
 abstract class Flavour {
   String get name;
   String get title;
@@ -7,6 +9,7 @@ abstract class Flavour {
   String get wordIndexTab;
   String get settingsTab;
   String get about;
+  String hashWord(String input);
 }
 
 class OlamFlavour extends Flavour {
@@ -36,6 +39,8 @@ class OlamFlavour extends Flavour {
 
   @override
   String get wordIndexTab => "പദമാലിക";
+
+  String hashWord(String input) => hashMalayalam(input);
 }
 
 class AlarFlavour extends Flavour {
@@ -65,4 +70,6 @@ class AlarFlavour extends Flavour {
 
   @override
   String get wordIndexTab => "ಸೂಚಿ";
+
+  String hashWord(String input) => hashKannada(input);
 }

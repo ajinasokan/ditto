@@ -26,6 +26,7 @@ class OlamStore extends Store {
   String clippedString = "";
 
   List<String> words = [];
+  List<String> hashes = [];
 
   Entry selectedEntry = Entry();
 

@@ -18,6 +18,7 @@ export 'package:flutter_tts/flutter_tts.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:store_keeper/store_keeper.dart';
 export 'package:ditto/flavours.dart';
+export 'word_hashing.dart';
 export 'utils.dart';
 
 Flavour flavour = OlamFlavour();

@@ -5,7 +5,3 @@ void log(Object tag, [Object extra = ""]) {
     print("$tag");
   }
 }
-
-String stem(String input) {
-  return input.toLowerCase().split(" ").join();
-}
