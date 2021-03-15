@@ -51,6 +51,21 @@ After changing models run:
 $ dartgen
 ```
 
+## How it works
+
+The generator script parses and combines datasets and exports to app's asset directory. The main Olam dataset is in the format:
+
+```
+# id	english_word	part_of_speech	malayalam_definition
+174569	.net	n	പുത്തന്‍ കമ്പ്യൂട്ടര്‍ സാങ്കേതികത ഭാഷ
+```
+
+Datuk and Alar datasets are in a YAML format described [here](https://github.com/knadh/datuk#format).
+
+Since the format and size of the content is known before hand ditto binary packs these datasets into a word index (`olam_words.bin`) and a definition file(`olam_defs.bin`). Word index contains offsets to the definitions in the definition file. Words are sorted alphabetically in the index file. This is shown as it is in the app's index page. 
+
+For searching app first performs a binary search on the sorted word index and then ranks results based on the phonetic hash of corresponding langauge - MLPhone for Malayalam, KNPhone for Kannada and DoubleMetaphone for English.
+
 ## License
 
 ditto is licensed under the GPL 3.0 license
